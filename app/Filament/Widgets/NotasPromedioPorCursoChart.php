@@ -7,7 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class NotasPromedioPorCursoChart extends ChartWidget
 {
-    protected static ?string $heading = 'Promedio de Notas por Curso';
+    protected static ?string $heading = 'Promedio de Calificaciones por Curso';
 
     protected function getData(): array
     {
@@ -17,24 +17,31 @@ class NotasPromedioPorCursoChart extends ChartWidget
             WHEN "C" THEN 10
             ELSE 0 END) as promedio')
             ->groupBy('curso')
+            ->orderByDesc('promedio')
             ->pluck('promedio', 'curso');
+
+        $labels = $notas->keys()->values()->all();
+
+        // Genera un color diferente para cada curso
+        $colors = [];
+        foreach ($labels as $label) {
+            $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+        }
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Promedio',
+                    'label' => 'Promedio de calificación',
                     'data' => $notas->values(),
-                    'borderColor' => '#3b82f6',
-                    'backgroundColor' => '#93c5fd',
-                    'tension' => 0.4,
+                    'backgroundColor' => $colors,
                 ],
             ],
-            'labels' => $notas->keys(),
+            'labels' => $labels,
         ];
     }
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     }
 }

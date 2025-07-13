@@ -31,7 +31,9 @@ class DirectorController extends Controller
         }
 
         if ($request->filled('anio')) {
-            $query->where('anio', $request->anio);
+        $query->whereHas('notas', function ($q) use ($request) {
+        $q->where('anio', $request->anio);
+        });
         }
 
         $estudiantes = $query->get();

@@ -56,8 +56,8 @@
                         <th class="border px-2 py-1">Estudiante</th>
                         <th class="border px-2 py-1">Grado</th>
                         <th class="border px-2 py-1">Sección</th>
-                        <th class="border px-2 py-1">Docente</th>
                         <th class="border px-2 py-1">Notas</th>
+                        <th class="border px-2 py-1">Año</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,17 +66,30 @@
                             <td class="border px-2 py-1">{{ $estudiante->nombres_completos }}</td>
                             <td class="border px-2 py-1">{{ $estudiante->grado->nombre ?? '-' }}</td>
                             <td class="border px-2 py-1">{{ $estudiante->seccion->nombre ?? '-' }}</td>
-                            <td class="border px-2 py-1">{{ $estudiante->docente->name ?? '-' }}</td>
                             <td class="border px-2 py-1">
                                 @foreach ($estudiante->notas as $nota)
-                                    <div>{{ $nota->curso }}: <strong>{{ $nota->valor }}</strong></div>
+                                    <div>
+                                        {{ ucfirst($nota->curso) }}: <strong>{{ $nota->valor }}</strong>
+                                        @if ($nota->valor == 'A')
+                                            <span class="ml-2 text-green-600 text-xs">{{ ucfirst('buen promedio') }}</span>
+                                        @elseif ($nota->valor == 'B')
+                                            <span
+                                                class="ml-2 text-yellow-600 text-xs">{{ ucfirst('a seguir mejorando') }}</span>
+                                        @elseif ($nota->valor == 'C')
+                                            <span class="ml-2 text-red-600 text-xs">{{ ucfirst('debe mejorar') }}</span>
+                                        @endif
+                                    </div>
                                 @endforeach
+                            </td>
+                            <td class="border px-2 py-1">
+                                {{ $estudiante->notas->pluck('anio')->unique()->implode(', ') }}
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="5" class="text-center border px-2 py-2 text-gray-500">No hay datos disponibles
                             </td>
+
                         </tr>
                     @endforelse
                 </tbody>

@@ -11,7 +11,7 @@ class Estudiante extends Model
         'sexo',
         'grado_id',
         'seccion_id',
-        'usuario_id', // ✅ Agregado correctamente
+        'usuario_id', 
     ];
 
     public function grado()

@@ -36,7 +36,9 @@ class DocenteCsvController extends Controller
         $handle = fopen($file->getRealPath(), 'r');
 
         // Leer encabezado de cursos
-        $header = fgetcsv($handle, 1000, ';');
+        $header = array_map(function($h) {
+            return strtolower(trim(str_replace("\u{FEFF}", '', $h)));
+        }, fgetcsv($handle, 1000, ';'));
 
         $usuario = Auth::user();
         $grado_id = $usuario->grado_id;
@@ -74,7 +76,8 @@ class DocenteCsvController extends Controller
     'usuario_id' => $usuario->id, // 👈 FIX aplicado aquí
     ]);
 
-    $anioIndex = array_search('anio', array_map('strtolower', $header));
+    $anioIndex = array_search('anio', $header);
+
     $anio = ($anioIndex !== false && isset($data[$anioIndex])) ? intval($data[$anioIndex]) : now()->year;
 
     for ($i = 3; $i < count($data); $i++) {
@@ -90,7 +93,7 @@ class DocenteCsvController extends Controller
                 'estudiante_id' => $estudiante->id,
                 'curso' => $curso,
                 'valor' => $nota,
-                'anio' => $anio,
+                'anio' => $anio, // Aquí debe ir el año leído del CSV
             ]);
         }
     }

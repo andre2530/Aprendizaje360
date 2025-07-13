@@ -20,7 +20,10 @@
                 <tr class="bg-gray-100">
                     <th class="border px-4 py-2 text-left">Nombre</th>
                     <th class="border px-4 py-2 text-left">Sexo</th>
+                    <th class="border px-4 py-2 text-left">Grado</th>
+                    <th class="border px-4 py-2 text-left">Sección</th>
                     <th class="border px-4 py-2 text-left">Notas</th>
+                    <th class="border px-4 py-2 text-left">Año</th> <!-- Nueva columna -->
                 </tr>
             </thead>
             <tbody>
@@ -28,12 +31,15 @@
                     <tr>
                         <td class="border px-4 py-2">{{ $estudiante->nombres_completos }}</td>
                         <td class="border px-4 py-2">{{ $estudiante->sexo }}</td>
+                        <td class="border px-4 py-2">{{ $estudiante->grado->nombre ?? '-' }}</td>
+                        <td class="border px-4 py-2">{{ $estudiante->seccion->nombre ?? '-' }}</td>
                         <td class="border px-4 py-2">
-                            <ul class="list-disc pl-4">
-                                @foreach($estudiante->notas as $nota)
-                                    <li><strong>{{ $nota->curso }}:</strong> {{ $nota->valor }}</li>
-                                @endforeach
-                            </ul>
+                            @foreach ($estudiante->notas as $nota)
+                                <div>{{ ucfirst($nota->curso) }}: <strong>{{ $nota->valor }}</strong></div>
+                            @endforeach
+                        </td>
+                        <td class="border px-4 py-2">
+                            {{ $estudiante->notas->pluck('anio')->unique()->implode(', ') }}
                         </td>
                     </tr>
                 @endforeach
