@@ -70,15 +70,15 @@ class DocenteCsvController extends Controller
            if (!$existe) {
     $estudiante = Estudiante::create([
         'nombres_completos' => $nombre,
-    'sexo' => $sexo,
-    'grado_id' => $grado_id,
-    'seccion_id' => $seccion_id,
-    'usuario_id' => $usuario->id, // 👈 FIX aplicado aquí
+        'sexo' => $sexo,
+        'grado_id' => $grado_id,
+        'seccion_id' => $seccion_id,
+        'usuario_id' => $usuario->id, // 👈 FIX aplicado aquí
     ]);
 
     $anioIndex = array_search('anio', $header);
-
-    $anio = ($anioIndex !== false && isset($data[$anioIndex])) ? intval($data[$anioIndex]) : now()->year;
+    $anio = ($anioIndex !== false && isset($data[$anioIndex]) && is_numeric($data[$anioIndex]))
+    ? intval($data[$anioIndex]) : now()->year;
 
     for ($i = 3; $i < count($data); $i++) {
         $curso = $header[$i] ?? null;

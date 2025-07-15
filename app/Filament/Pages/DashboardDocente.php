@@ -11,6 +11,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Widgets\NotasPorCategoriaChart;
 use App\Filament\Widgets\NotasPromedioPorCursoChart;
+use App\Filament\Widgets\CantidadEstudiantesPorCursoBarChart;
+use App\Filament\Widgets\EstudiantesAprobadosDesaprobadosChart;
 
 class DashboardDocente extends Page implements HasTable
 {
@@ -28,7 +30,7 @@ class DashboardDocente extends Page implements HasTable
     public function mount(): void
     {
         $user = auth()->user();
-        $this->estudiantes = collect();
+        $this->estudiantes = collect(); 
 
         $asignaciones = $user->gradosSecciones;
 
@@ -50,6 +52,8 @@ class DashboardDocente extends Page implements HasTable
         return [
             NotasPorCategoriaChart::class,
             NotasPromedioPorCursoChart::class,
+            CantidadEstudiantesPorCursoBarChart::class,
+            EstudiantesAprobadosDesaprobadosChart::class,
         ];
     }
 

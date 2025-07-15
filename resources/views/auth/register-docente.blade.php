@@ -1,36 +1,39 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 to-blue-400">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div class="min-h-screen flex items-center justify-center bg-cover bg-center"
+        style="background-image: url('/images/PXL_20250513_085216126.MP.jpg');">
+        <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex justify-center mb-6">
+                <img src="/images/Logoie.svg" alt="Logo Institución" class="h-16">
+            </div>
             <h2 class="text-2xl font-bold text-center text-blue-800 mb-6">Registro de Docente</h2>
 
             <form method="POST" action="{{ route('docente.registrar') }}">
                 @csrf
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="name">Nombre</label>
                     <input id="name" type="text" name="name" required
-                        class="w-full border border-gray-300 rounded px-3 py-2">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Nombre">
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Correo electrónico</label>
                     <input id="email" type="email" name="email" required
-                        class="w-full border border-gray-300 rounded px-3 py-2">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Correo electrónico">
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="password">Contraseña</label>
                     <input id="password" type="password" name="password" required
-                        class="w-full border border-gray-300 rounded px-3 py-2">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Contraseña">
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="password_confirmation">Confirmar
-                        contraseña</label>
                     <input id="password_confirmation" type="password" name="password_confirmation" required
-                        class="w-full border border-gray-300 rounded px-3 py-2">
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Confirmar contraseña">
                 </div>
 
                 <button type="submit"

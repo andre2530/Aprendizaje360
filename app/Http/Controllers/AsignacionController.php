@@ -24,6 +24,7 @@ public function store(Request $request)
         'usuario_id' => 'required|exists:usuarios,id',
         'grado_id' => 'required|exists:grados,id',
         'seccion_id' => 'required|exists:secciones,id',
+        'anio' => 'required|integer', // 👈 Añade validación para el año
     ]);
 
     DB::table('docente_grado_seccion')->updateOrInsert(
@@ -31,8 +32,7 @@ public function store(Request $request)
         [
             'grado_id' => $request->grado_id,
             'seccion_id' => $request->seccion_id,
-            'updated_at' => now(),
-            'created_at' => now(),
+            'anio' => $request->anio, // 👈 Guarda el año del CSV
         ]
     );
 
